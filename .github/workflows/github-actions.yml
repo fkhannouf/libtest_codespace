@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Build OS4 Shared Library:
+  Build-OS4-Shared-Library:
     runs-on: ubuntu-latest
     container:
       image: amigadev/crosstools:ppc-amigaos
