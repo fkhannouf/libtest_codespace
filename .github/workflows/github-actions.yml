@@ -1,5 +1,6 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+# Gives the workflow name the same as the project name
+run-name: ${{ github.actor }} is building ${{ github.project }} 🚀
 on: [push]
 jobs:
   Build-OS4-Shared-Library:
@@ -19,15 +20,16 @@ jobs:
           pwd
           ls .
           echo ${{ github.workspace }}
-      - name: Builds the OS4 shared library 📚 and uploads it as an artifact 🏺
+      - name: Builds the OS4 shared library 📚 and uploads it as an artifact
         id: os4_shared_library
         run: |
           cmake .
-          ls .
+          echo "📐 CMake has been run successfully."
           make -f Makefile
-          ls -al .
-          
-      - uses: actions/upload-artifact@v3
+          echo "🛠 Make did its job."
+
+      - name: Upload the Artifact 🏺
+        uses: actions/upload-artifact@v3
         with:
           name: uuid.library
           path: ./uuid.library
