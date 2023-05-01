@@ -2,8 +2,10 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Build-OS4-Shared-Library:
     runs-on: ubuntu-latest
+    container:
+      image: amigadev/crosstools:ppc-amigaos
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -11,10 +13,20 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - run: echo "🖥️ The workflow is now ready to build your project on the runner."
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Builds the OS4 shared library
+        id: os4_shared_library
+        run: |
+          cd ./uuid_files
+          make -f Makefile
+          
+      - uses: actions/upload-artifact@v1
+        with:
+          name: uuid.library
+          path: uuid_files/uuid.library
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
 # on:
