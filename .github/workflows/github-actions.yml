@@ -30,7 +30,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: uuid.library
-          path: uuid_files/uuid.library
+          path: ./uuid.library
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
 # on:

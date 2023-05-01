@@ -30,7 +30,7 @@ add_executable(uuid.library
         uuid_files/main/store.c
 )
 
-# Copy the target to the /home/vagrant directory
+# Copy the target to source directory
 add_custom_command(TARGET uuid.library POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:uuid.library> /home/vagrant
-        )
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:uuid.library> ${CMAKE_SOURCE_DIR}
+)
