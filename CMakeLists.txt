@@ -32,5 +32,5 @@ add_executable(uuid.library
 
 # Copy the target to source directory
 add_custom_command(TARGET uuid.library POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:uuid.library> ${CMAKE_SOURCE_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:uuid.library> ${CMAKE_SOURCE_DIR}/os4
 )
