@@ -16,7 +16,9 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to build your project on the runner."
       - name: List files in the repository
         run: |
-          ls ${{ github.workspace }}
+          pwd
+          ls .
+          echo ${{ github.workspace }}
       - name: Builds the OS4 shared library
         id: os4_shared_library
         run: |
