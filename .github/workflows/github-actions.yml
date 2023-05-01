@@ -19,11 +19,13 @@ jobs:
           pwd
           ls .
           echo ${{ github.workspace }}
-      - name: Builds the OS4 shared library
+      - name: Builds the OS4 shared library 📚 and uploads it as an artifact 🏺
         id: os4_shared_library
         run: |
-          cd ./uuid_files
+          cmake .
+          ls .
           make -f Makefile
+          ls -al .
           
       - uses: actions/upload-artifact@v3
         with:
