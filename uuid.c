@@ -7,11 +7,12 @@
 #include <proto/uuid.h>
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 
 struct UuidBase *UuidBase;
 struct UuidIFace *IUuid;
 
-UNUSED char *ver = "\0$VER:uuid 1.1 (21.10.2018)\0";
+UNUSED char *version = "\0$VER:uuid 1.1 (21.10.2018)\0";
 
 int main(int argc, char **argv)
 {
@@ -31,11 +32,11 @@ int main(int argc, char **argv)
 		A_NAME
 	};
 	
-	UuidBase = IExec->OpenLibrary("uuid.library", 1L);
+	UuidBase = (struct UuidBase *)IExec->OpenLibrary("uuid.library", 1L);
 	if(UuidBase) {
-		IUuid = (struct UuidIFace *)IExec->GetInterface(UuidBase, "main", 1, NULL);
+		IUuid = (struct UuidIFace *)IExec->GetInterface((struct Library *)UuidBase, "main", 1, NULL);
 		if (!IUuid) {
-			IExec->DropInterface(IUuid);
+			IExec->DropInterface((struct Interface *)IUuid);
 			printf("uuid (c) 2018 Chris Young <chris@unsatisfactorysoftware.co.uk>\n\nUnable to open uuid.library\n\n");
 			return 5;
 		}
@@ -73,7 +74,7 @@ int main(int argc, char **argv)
 
 	void *uuid_ns = NULL;
 	void *uuid = NULL;
-	int i = 0;
+	ULONG i = 0;
 	
 	for(i = 0; i < cnt; i++) {
 	
@@ -115,8 +116,8 @@ int main(int argc, char **argv)
 	if(name != NULL) free(name);
 	if(namespace != NULL) free(namespace);
 
-	IExec->DropInterface(IUuid);
-	IExec->CloseLibrary(UuidBase);
+	IExec->DropInterface((struct Interface *)IUuid);
+	IExec->CloseLibrary((struct Library *)UuidBase);
 
 	return 0;
 }
