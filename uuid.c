@@ -33,17 +33,18 @@ int main(int argc, char **argv)
 	};
 	
 	UuidBase = (struct UuidBase *)IExec->OpenLibrary("uuid.library", 1L);
-	if(UuidBase) {
-		IUuid = (struct UuidIFace *)IExec->GetInterface((struct Library *)UuidBase, "main", 1, NULL);
-		if (!IUuid) {
-			IExec->DropInterface((struct Interface *)IUuid);
-			printf("uuid (c) 2018 Chris Young <chris@unsatisfactorysoftware.co.uk>\n\nUnable to open uuid.library\n\n");
-			return 5;
-		}
-	} else {
-		printf("uuid (c) 2018 Chris Young <chris@unsatisfactorysoftware.co.uk>\n\nUnable to open uuid.library\n\n");
-		return 5;
-	}
+
+    if (!UuidBase) {
+        printf("Unable to open uuid.library\n\n");
+        return 5;
+    }
+
+    IUuid = (struct UuidIFace *)IExec->GetInterface((struct Library *)UuidBase, "main", 1, NULL);
+    if (!IUuid) {
+        IExec->DropInterface((struct Interface *)IUuid);
+        printf("Unable to open uuid.library\n\n");
+        return 5;
+    }
 
 	if(argc != 0) {
 		// cli startup
